@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  pdf-exporter:
+    image: gotenberg/gotenberg:7
+    expose:
+      - "3000"
+
+  docx-renderer:
+    build:
+      context: ./docx-renderer
+    expose:
+      - "80"
+
+  wrapper:
+    build:
+      context: ./wrapper
+    ports:
+      - "80:80"
+    depends_on:
+      - pdf-exporter
+      - docx-renderer
